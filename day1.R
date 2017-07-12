@@ -16,6 +16,34 @@ gsurl1 = gs_url(sheets_url)
 data_2017 = gs_read(gsurl1)
 View(data_2017)
 
-#how many people in the class
+###how many people in the class
 dim(data_2017)
 
+###JSON
+install.packages("jsonlite")
+library(jsonlite)
+github_url = "https://api.github.com/users/jtleek/repos"
+jsonData <- fromJSON(github_url)
+dim(jsonData)
+jsonData$name
+View(jsonData)
+
+github_url = "https://api.github.com/users/hadley/repos"
+hadley_data <- fromJSON(github_url)
+dim(hadley_data)
+hadley_data$stargazers_count
+hadley_data$open_issues
+
+##Lab on dyplr
+library(readxl)
+X1000genomes <- read_excel("~/Downloads/1000genomes.xlsx", sheet = "Final Phase Sequence Data")
+View(X1000genomes)
+# subset to just low coverage
+x1k_g = X1000genomes[,1:7]
+colnames(x1k_g) <- x1k_g[1,]
+x1k_g <- x1k_g[-1,]
+colnames(x1k_g) = colnames(x1k_g) %>% tolower() %>% gsub(x=.,pattern=" ",replacement="") %>% substr(1,10)
+x1k_g %>% group_by(platform) %>% summarize(sum(totalseque))
+View(x1k_g)
+
+    
