@@ -1,0 +1,49 @@
+---
+title: "Data Cleaning"
+author: "Your name"
+date: "July 11, 2017"
+output: html_document
+---
+
+### A. "Real Property Taxes" Dataset 
+
+Download the "real property taxes" dataset from the website (via OpenBaltimore), 
+he data is located here (note you don\'t need to unzip it to read it into R):
+http://sisbid.github.io/Module1/data/Real_Property_Taxes.csv.gz
+
+1. Read the Property Tax data into R and call it the variable `tax`
+```{r}
+library("readr", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
+tax = read_csv("http://sisbid.github.io/Module1/data/Real_Property_Taxes.csv.gz")
+```
+
+2. How many addresses pay property taxes? 
+
+```{r}
+nrow(tax)
+```
+
+3. What is the total city and state tax paid?
+```{r}
+state_tax = tax$StateTax %>% str_replace(fixed("$"), "") %>% str_replace(",","") %>% as.numeric
+
+city_tax = tax$CityTax %>% str_replace(fixed("$"), "") %>% str_replace(",","") %>% as.numeric
+
+sum(city_tax, na.rm = TRUE)
+
+glimpse(tax)
+View(tax)
+
+
+
+
+```
+
+
+4. Convert the 'lotSize' variable to a numeric square feet variable. Tips:
+* Look at the data 
+* Assume hyphens represent inches within square foot meassuremnts 
+* Assume decimals within acreage measurements
+* 1 acre = 43560 square feet
+* Look at the data 
+
